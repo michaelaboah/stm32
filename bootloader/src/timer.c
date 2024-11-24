@@ -2,8 +2,7 @@
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/cm3/vector.h>
 #include <stdint.h>
-#include "core/timer.h"
-#include "libopencm3/stm32/common/timer_common_all.h"
+#include "timer.h"
 
 #define PRESCALER (84)
 #define ARR_VALUE (1000)
