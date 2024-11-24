@@ -5,7 +5,7 @@
 #include "core/system.h" 
 #include "core/timer.h"
 
-#define BOOTLOADER_SIZE (0x800U)
+#define BOOTLOADER_SIZE (0x8000U)
 
 #define LED_PORT (GPIOA)
 #define LED_PIN  (GPIO5)
