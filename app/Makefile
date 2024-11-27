@@ -34,7 +34,7 @@ LDSCRIPT = linkerscript.ld
 LDLIBS		+= -l$(LIBNAME)
 ifeq ($(COMPILER),clang)
 LDLIBS		+= -L/usr/arm-none-eabi/lib
-LDLIBS		+= -L/usr/lib/gcc/arm-none-eabi/13.2.0/
+LDLIBS		+= -L/usr/lib/gcc/arm-none-eabi/13.2.0/thumb/v7e-m+fp/hard/
 endif
 LDFLAGS		+= -L$(OPENCM3_DIR)/lib
 
