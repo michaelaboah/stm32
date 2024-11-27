@@ -1,12 +1,13 @@
 [
   {
     "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
+      "/usr/bin/clang",
       "-Os",
       "-std=c99",
       "-ggdb3",
       "-mthumb",
-      "-mcpu=cortex-m4",
+      "-target",
+      "arm-none-eabi",
       "-mfloat-abi=hard",
       "-mfpu=fpv4-sp-d16",
       "-Wextra",
@@ -35,12 +36,13 @@
   },
   {
     "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
+      "/usr/bin/clang",
       "-Os",
       "-std=c99",
       "-ggdb3",
       "-mthumb",
-      "-mcpu=cortex-m4",
+      "-target",
+      "arm-none-eabi",
       "-mfloat-abi=hard",
       "-mfpu=fpv4-sp-d16",
       "-Wextra",
@@ -63,12 +65,13 @@
   },
   {
     "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
+      "/usr/bin/clang",
       "-Os",
       "-std=c99",
       "-ggdb3",
       "-mthumb",
-      "-mcpu=cortex-m4",
+      "-target",
+      "arm-none-eabi",
       "-mfloat-abi=hard",
       "-mfpu=fpv4-sp-d16",
       "-Wextra",
@@ -97,12 +100,13 @@
   },
   {
     "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
+      "/usr/bin/clang",
       "-Os",
       "-std=c99",
       "-ggdb3",
       "-mthumb",
-      "-mcpu=cortex-m4",
+      "-target",
+      "arm-none-eabi",
       "-mfloat-abi=hard",
       "-mfpu=fpv4-sp-d16",
       "-Wextra",
@@ -131,12 +135,13 @@
   },
   {
     "arguments": [
-      "/usr/bin/arm-none-eabi-gcc",
+      "/usr/bin/clang",
       "-Os",
       "-std=c99",
       "-ggdb3",
       "-mthumb",
-      "-mcpu=cortex-m4",
+      "-target",
+      "arm-none-eabi",
       "-mfloat-abi=hard",
       "-mfpu=fpv4-sp-d16",
       "-Wextra",
@@ -162,5 +167,40 @@
     "directory": "/home/michaelaboah/SoftwareEngineering/stm32.git/master/app",
     "file": "/home/michaelaboah/SoftwareEngineering/stm32.git/master/shared/src/core/uart.c",
     "output": "/home/michaelaboah/SoftwareEngineering/stm32.git/master/shared/src/core/uart.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-Os",
+      "-std=c99",
+      "-ggdb3",
+      "-mthumb",
+      "-target",
+      "arm-none-eabi",
+      "-mfloat-abi=hard",
+      "-mfpu=fpv4-sp-d16",
+      "-Wextra",
+      "-Wshadow",
+      "-Wimplicit-function-declaration",
+      "-Wredundant-decls",
+      "-Wmissing-prototypes",
+      "-Wstrict-prototypes",
+      "-fno-common",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-Wall",
+      "-Wundef",
+      "-DSTM32F4",
+      "-I../libopencm3/include",
+      "-Iinc",
+      "-I../shared/inc",
+      "-c",
+      "-o",
+      "../shared/src/core/ringbuffer.o",
+      "../shared/src/core/ringbuffer.c"
+    ],
+    "directory": "/home/michaelaboah/SoftwareEngineering/stm32.git/master/app",
+    "file": "/home/michaelaboah/SoftwareEngineering/stm32.git/master/shared/src/core/ringbuffer.c",
+    "output": "/home/michaelaboah/SoftwareEngineering/stm32.git/master/shared/src/core/ringbuffer.o"
   }
 ]
