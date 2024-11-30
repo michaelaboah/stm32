@@ -4,9 +4,13 @@ Q		:= @
 NULL		:= 2>/dev/null
 endif
 
-SRC_DIR     = src
-INC_DIR     = inc
-OPENCM3_DIR = ../libopencm3
+COMPILER ?= gcc
+
+SRC_DIR				= src
+INC_DIR				= inc
+OPENCM3_DIR			= ../libopencm3
+SHARED_SRC_DIR		= ../shared/src
+SHARED_INC_DIR		= ../shared/inc
 
 BINARY = bootloader
 
@@ -16,7 +20,11 @@ BINARY = bootloader
 LIBNAME			= opencm3_stm32f4
 DEFS				+= -DSTM32F4
 FP_FLAGS		?= -mfloat-abi=hard -mfpu=fpv4-sp-d16
+ifeq ($(COMPILER),clang)
+ARCH_FLAGS	= -mthumb -mcpu=cortex-m4 -target arm-none-eabi $(FP_FLAGS)
+else
 ARCH_FLAGS	= -mthumb -mcpu=cortex-m4 $(FP_FLAGS)
+endif
 
 ###############################################################################
 # Linkerscript
@@ -24,26 +32,47 @@ ARCH_FLAGS	= -mthumb -mcpu=cortex-m4 $(FP_FLAGS)
 LDSCRIPT = linkerscript.ld
 LDLIBS		+= -l$(LIBNAME)
 LDFLAGS		+= -L$(OPENCM3_DIR)/lib
+ifeq ($(COMPILER),clang)
+LDLIBS		+= -L/usr/arm-none-eabi/lib
+LDLIBS		+= -L/usr/lib/gcc/arm-none-eabi/13.2.0/thumb/v7e-m+fp/hard/
+endif
 
 ###############################################################################
 # Includes
 
 DEFS		+= -I$(OPENCM3_DIR)/include
 DEFS		+= -I$(INC_DIR)
+DEFS		+= -I$(SHARED_INC_DIR)
 
 ###############################################################################
 # Executables
 
-PREFIX		?= arm-none-eabi-
 
+ifeq ($(COMPILER),clang)
+PREFIX		?= llvm-
+CC		:= clang
+CXX		:= clang++
+LD		:= clang
+AR		:= $(PREFIX)ar
+AS		:= $(PREFIX)as
+OBJCOPY		:= $(PREFIX)objcopy
+OBJDUMP		:= $(PREFIX)objdump
+# Debugger
+GDB		:= lldb 
+
+else
+PREFIX		?= arm-none-eabi-
 CC		:= $(PREFIX)gcc
 CXX		:= $(PREFIX)g++
 LD		:= $(PREFIX)gcc
 AR		:= $(PREFIX)ar
 AS		:= $(PREFIX)as
+
 OBJCOPY		:= $(PREFIX)objcopy
 OBJDUMP		:= $(PREFIX)objdump
 GDB		:= $(PREFIX)gdb
+endif
+
 STFLASH		= $(shell which st-flash)
 OPT		:= -Os
 DEBUG		:= -ggdb3
@@ -82,11 +111,18 @@ TGT_CPPFLAGS	+= $(DEFS)
 ###############################################################################
 # Linker flags
 
-TGT_LDFLAGS		+= --static -nostartfiles
+TGT_LDFLAGS		+= --static --verbose
 TGT_LDFLAGS		+= -T$(LDSCRIPT)
 TGT_LDFLAGS		+= $(ARCH_FLAGS) $(DEBUG)
 TGT_LDFLAGS		+= -Wl,-Map=$(*).map -Wl,--cref
 TGT_LDFLAGS		+= -Wl,--gc-sections
+
+
+ifeq ($(COMPILER),gcc)
+TGT_LDFLAGS		+= -nostartfiles
+endif
+
+
 ifeq ($(V),99)
 TGT_LDFLAGS		+= -Wl,--print-gc-sections
 endif
@@ -94,6 +130,9 @@ endif
 ###############################################################################
 # Used libraries
 
+ifeq ($(COMPILER),clang)
+LDLIBS		+= --rtlib=libgcc
+endif
 LDLIBS		+= -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group
 
 ###############################################################################

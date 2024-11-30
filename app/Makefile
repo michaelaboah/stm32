@@ -1,4 +1,3 @@
-
 # Be silent per default, but 'make V=1' will show all compiler calls.
 ifneq ($(V),1)
 Q		:= @
@@ -214,6 +213,9 @@ print-%:
 %.o: %.cpp
 	@#printf "  CXX     $(*).cpp\n"
 	$(Q)$(CXX) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $(*).o -c $(*).cpp
+
+debug: elf
+	openocd -f /usr/share/openocd/scripts/interface/stlink-v2.cfg -f /usr/share/openocd/scripts/target/stm32f4x.cfg
 
 clean:
 	@#printf "  CLEAN\n"
