@@ -23,6 +23,7 @@
       "-DSTM32F4",
       "-I../libopencm3/include",
       "-Iinc",
+      "-I../shared/inc",
       "-c",
       "-o",
       "src/bootloader.o",
