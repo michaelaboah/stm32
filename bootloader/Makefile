@@ -86,6 +86,7 @@ OBJS		+= $(SRC_DIR)/$(BINARY).o
 OBJS		+= $(SRC_DIR)/comms.o
 OBJS		+= $(SHARED_SRC_DIR)/core/crc8.o
 OBJS		+= $(SHARED_SRC_DIR)/core/uart.o
+OBJS		+= $(SHARED_SRC_DIR)/core/system.o
 OBJS		+= $(SHARED_SRC_DIR)/core/ringbuffer.o
 
 ###############################################################################
@@ -157,7 +158,8 @@ list: $(BINARY).list
 GENERATED_BINARIES=$(BINARY).elf $(BINARY).bin $(BINARY).hex $(BINARY).srec $(BINARY).list $(BINARY).map
 
 images: $(BINARY).images
-flash: $(BINARY).flash
+flash: 
+	st-flash --reset write $(BINARY).bin 0x8000000
 
 $(OPENCM3_DIR)/lib/lib$(LIBNAME).a:
 ifeq (,$(wildcard $@))

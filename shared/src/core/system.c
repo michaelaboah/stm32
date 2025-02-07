@@ -27,8 +27,8 @@ static void rcc_setup(void) {
 
 
 void system_setup(void) {
-    systick_setup();
     rcc_setup();
+    systick_setup();
 }
 
 void system_delay(uint64_t milliseconds) {
